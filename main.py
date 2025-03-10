@@ -16,13 +16,9 @@ def adder(data, N, test, output):
         return output
 
 def main():
-    data = """2
-4
-3 -1 1 14
-5
-9 6 -53 32 16""".splitlines()
+    N = int(sys.stdin.readline())
+    data = sys.stdin.readlines(N * 2)
 
-    N = int(data[0])
     test = 0
     output = []
 
