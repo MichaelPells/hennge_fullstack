@@ -1,8 +1,6 @@
-import sys
-
-def adder(data, N, test, output):
-    line = test * 2
-    integers = map(lambda i: int(i), data[line].split())
+def adder(cases, N, test, output):
+    line = (test * 2) - 1
+    integers = map(lambda i: int(i), cases[line].split())
 
     integers = filter(lambda Yn: Yn >= 0, integers)
     integers = map(lambda Yn: Yn**2, integers)
@@ -11,18 +9,19 @@ def adder(data, N, test, output):
     output.append(str(result))
 
     if test < N:
-        return adder(data, N, test + 1, output)
+        return adder(cases, N, test + 1, output)
     else:
         return output
 
 def main():
-    N = int(sys.stdin.readline())
-    data = sys.stdin.readlines(N * 2)
+    data = open(0)
+    N = int(data.readline())
+    cases = data.readlines()
 
     test = 0
     output = []
 
-    adder(data, N, test + 1, output)
+    adder(cases, N, test + 1, output)
     print("\n".join(output))
 
 
