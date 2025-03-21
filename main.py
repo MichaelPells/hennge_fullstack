@@ -1,17 +1,33 @@
 def adder(cases, N, test, output):
-    line = (test * 2) - 1
-    integers = map(lambda i: int(i), cases[line].split())
+    """
+    `adder` function:
+    - Step 1: Extracts test case.
+    - Step 2: Filters out negative integers (`Yn`).
+    - Step 3: Squares all integers.
+    - Step 4: Sums up all integers `(Y1 + Y2 + ... + Yn)`.
+    - Step 5: Stores result to `output`.
+    - Step 6: Calls another `adder` function on next test case, if any, or end recursion, if none.
+    """
 
+    # Step 1: Extracts test case.
+    line = (test * 2) - 1 # Test (Y1, Y2, ..., Yn) is taken from every other line
+    integers = map(lambda i: int(i), cases[line].split()) # Convert test to an iterable of integers
+
+    # Step 2: Filters out negative integers (`Yn`).
     integers = filter(lambda Yn: Yn >= 0, integers)
+
+    # Step 3: Squares all integers.
     integers = map(lambda Yn: Yn**2, integers)
+
+    # Step 4: Sums up all integers `(Y1 + Y2 + ... + Yn)`.
     result = sum(integers)
 
-    output.append(str(result))
+    # Step 5: Stores result to `output`.
+    output.append(str(result)) # Append result to `output` object (as a string for `str.join()`).
 
+    # Step 6: Calls another `adder` function on next test case, if any, or end recursion, if none.
     if test < N:
-        return adder(cases, N, test + 1, output)
-    else:
-        return output
+        adder(cases, N, test + 1, output)
 
 def main():
     """
@@ -34,11 +50,12 @@ def main():
     # and call `adder` function with all needed args.
     # This creates a recursion that treats all test cases
     # and stores all test results in `output`.
+    # `output` object is intentionally provided by reference, for a more efficient update to `output` across recursion.
     adder(cases, N, test + 1, output)
 
     # Step 3: Outputs program result to standard output.
-    # Join all results in `output` with `\n`
-    open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output
+    # Join all results in `output` with `\n`.
+    open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output.
 
 
 if __name__ == "__main__":
