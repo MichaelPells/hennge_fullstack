@@ -34,12 +34,6 @@ def TOTP(K, digits=10, timeref = 0, X = 30):
 
 URL = "https://api.challenge.hennge.com/challenges/003"
 
-body = {
-  "github_url": "https://gist.github.com/MichaelPells/dc6a80a309a866999c259645cfec65ce",
-  "contact_email": "themichaelpells@gmail.com",
-  "solution_language": "python"
-}
-
 userid = "themichaelpells@gmail.com"
 
 secret = f"{userid}HENNGECHALLENGE003"
@@ -48,6 +42,12 @@ X = 30
 
 password = TOTP(secret, 10, T0, X).zfill(10)
 print(password)
+
+body = {
+  "github_url": "https://gist.github.com/MichaelPells/dc6a80a309a866999c259645cfec65ce",
+  "contact_email": userid,
+  "solution_language": "python"
+}
 
 # response = requests.post(URL,
 #               json = body,
