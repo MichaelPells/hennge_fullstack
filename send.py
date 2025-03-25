@@ -23,12 +23,12 @@ def Truncate(hmac_sha512):
     binary = int(hmac_sha512[(offset *2):((offset*2)+8)], 16) & 0x7FFFFFFF
     return str(binary)
 
-def TOTP(K, digits=10, timeref = 0, timestep = 30):
+def TOTP(K, digits=10, timeref = 0, X = 30):
     """TOTP, time-based variant of HOTP
     digits control the response length
-    the C in HOTP is replaced by ( (currentTime - timeref) / timestep )
+    the C in HOTP is replaced by ( (currentTime - timeref) / X )
     """
-    C = int ( time.time() - timeref ) // timestep
+    C = int ( time.time() - timeref ) // X
     return HOTP(K, C, digits = digits)
 
 
@@ -44,9 +44,9 @@ userid = "themichaelpells@gmail.com"
 
 secret = f"{userid}HENNGECHALLENGE003"
 T0 = 0
-timestep = 30
+X = 30
 
-password = TOTP(secret, 10, T0, timestep).zfill(10)
+password = TOTP(secret, 10, T0, X).zfill(10)
 print(password)
 
 # response = requests.post(URL,
