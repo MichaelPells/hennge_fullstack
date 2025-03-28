@@ -18,7 +18,6 @@ def adder(cases, N, test, output, depth, maxdepth):
     - Step 5: Stores result to `output`.
     - Step 6: Calls another `adder` function on next test case, if any, or end recursion, if none.
     """
-    print(depth)
 
     # Step 1: Extracts test case.
     line = (test * 2) - 1 # Test (Y1, Y2, ..., Yn) is taken from every other line
@@ -73,7 +72,7 @@ def main():
 
     # Step 3: Outputs program result to standard output.
     # Join all results in `output` with `\n`.
-    # open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output.
+    open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output.
 
 if __name__ == "__main__":
     main()
