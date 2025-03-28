@@ -8,7 +8,7 @@ M = Total number of integers in all test cases
 """
 
 
-def adder(cases, N, test, output):
+def adder(cases, N, test, output, depth, maxdepth):
     """
     `adder` function:
     - Step 1: Extracts test case.
@@ -18,6 +18,7 @@ def adder(cases, N, test, output):
     - Step 5: Stores result to `output`.
     - Step 6: Calls another `adder` function on next test case, if any, or end recursion, if none.
     """
+    print(depth)
 
     # Step 1: Extracts test case.
     line = (test * 2) - 1 # Test (Y1, Y2, ..., Yn) is taken from every other line
@@ -37,7 +38,14 @@ def adder(cases, N, test, output):
 
     # Step 6: Calls another `adder` function on next test case, if any, or end recursion, if none.
     if test < N:
-        adder(cases, N, test + 1, output)
+        if depth < maxdepth: adder(cases, N, test + 1, output, depth + 1, maxdepth)
+
+def recursion_depth_manager(cases, N, test, output, depth, maxdepth):
+    if test < N:
+        adder(cases, N, test + 1, output, depth + 1, maxdepth)
+
+        if test + maxdepth < N:
+            recursion_depth_manager(cases, N, test + maxdepth, output, 0, maxdepth)
 
 def main():
     """
@@ -61,11 +69,11 @@ def main():
     # This creates a recursion that treats all test cases
     # and stores all test results in `output`.
     # `output` object is intentionally provided by reference, for a more efficient update to `output` across recursion.
-    adder(cases, N, test + 1, output)
+    recursion_depth_manager(cases, N, test, output, 0, 5)
 
     # Step 3: Outputs program result to standard output.
     # Join all results in `output` with `\n`.
-    open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output.
+    # open(1, "w").write("\n".join(output)) # File descriptor `1` points to standard output.
 
 if __name__ == "__main__":
     main()
