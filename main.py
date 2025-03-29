@@ -21,7 +21,7 @@ def adder(cases: list, N: int, test: int, output: list, depth: int, maxdepth: in
 
     # Step 1: Extracts test case.
     line = (test * 2) - 1 # Test (Y1, Y2, ..., Yn) is taken from every other line
-    integers = map(int, cases[line].split()) # Convert test to an iterable of integers
+    integers = map(int, cases[line].strip().split()) # Convert test to an iterable of integers
 
     # Step 2: Filters out negative integers (`Yn`).
     integers = filter(lambda Yn: Yn >= 0, integers)
@@ -80,7 +80,7 @@ def main():
     # Step 1: Reads the standard input for test cases.
     data = open(0) # File descriptor `0` points to standard input
     N = int(data.readline().strip()) # Reads `N` test cases on first line
-    cases = data.read().splitlines() # Reads the rest of the input (test cases) as a list of lines
+    cases = data.readlines() # Reads the rest of the input (test cases) as a list of lines
 
     # Step 2: Calls `adder` function on first test case.
     test = 0 # Initialize number of test cases treated with `0`.
@@ -89,7 +89,7 @@ def main():
     if N: # If there are test cases
         # To optimize space complexity, implement a recursion manager to manage `adder`'s call stack,
         # ensuring it never exceeds a set maximum recursion depth (`maxdepth`)
-        maxdepth = 5
+        maxdepth = 5 # Set maximum recursion depth
 
         if N <= maxdepth + 1: # Call `adder` function if `N` does not exceed `maxdepth + 1`.
             adder(cases, N, test + 1, output, 1, maxdepth + 1)

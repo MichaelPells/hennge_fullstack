@@ -21,7 +21,7 @@ def adder(cases, N, test, output):
 
     # Step 1: Extracts test case.
     line = (test * 2) - 1 # Test (Y1, Y2, ..., Yn) is taken from every other line
-    integers = map(int, cases[line].split()) # Convert test to an iterable of integers
+    integers = map(int, cases[line].strip().split()) # Convert test to an iterable of integers
 
     # Step 2: Filters out negative integers (`Yn`).
     integers = filter(lambda Yn: Yn >= 0, integers)
@@ -50,7 +50,7 @@ def main():
     # Step 1: Reads the standard input for test cases.
     data = open(0) # File descriptor `0` points to standard input
     N = int(data.readline()) # Reads `N` test cases on first line
-    cases = data.read().splitlines() # Reads the rest of the input (test cases) as a list of lines
+    cases = data.readlines() # Reads the rest of the input (test cases) as a list of lines
 
     # Step 2: Calls `adder` function on first test case.
     test = 0 # Initialize number of test cases treated with `0`.
