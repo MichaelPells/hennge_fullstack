@@ -70,7 +70,8 @@ def recursion_manager(cases: list, N: int, test: int, output: list, depth : int,
         # Apply `recursion_manager` function if number of untreated test cases still exceeds `maxdepth + 1`.
         else:
             recursion_manager(cases, N, test + maxdepth, output, 0, maxdepth)
-
+from memory_profiler import profile
+@profile(precision=4)
 def main():
     """
     Program entry point. Reads data from standard input, passes data to `recursion_manager`,
@@ -89,7 +90,11 @@ def main():
     if N: # If there are test cases
         # To optimize space complexity, implement a recursion manager to manage `adder`'s call stack,
         # ensuring it never exceeds a set maximum recursion depth (`maxdepth`)
-        maxdepth = 5 # Set maximum recursion depth
+
+        # Set maximum recursion depth between 3 and 27.
+        # This range of values seemed optimal, recording a 0.000MB memory usage,
+        # after memory profiling during testing with 100 test cases.
+        maxdepth = 10
 
         if N <= maxdepth + 1: # Call `adder` function if `N` does not exceed `maxdepth + 1`.
             adder(cases, N, test + 1, output, 1, maxdepth + 1)
