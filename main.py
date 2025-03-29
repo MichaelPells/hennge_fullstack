@@ -37,29 +37,39 @@ def adder(cases: list, N: int, test: int, output: list, depth: int, maxdepth: in
 
     # Step 6: Calls another `adder` function on next test case if any,
     # or end recursion if none, or when maxdepth is reached.
-    # This terminates current recursion if our maximum recursion depth (maxdepth) is reached.
+    # This temporarily increases the recursion depth by `maxdepth - 1` more number of `adder` function calls,
+    # and terminates current recursion if the set maximum recursion depth (`maxdepth`) is reached.
     if test < N and depth < maxdepth:
         adder(cases, N, test + 1, output, depth + 1, maxdepth)
 
-def recursion_manager(cases: list, N: int, test: int, output: list, depth : int = 0, maxdepth : int = 5):
+def recursion_manager(cases: list, N: int, test: int, output: list, depth : int, maxdepth : int):
     """
     Manages `adder`'s call stack, ensuring recursion depth slowly approaches `sys.getrecursionlimit()`.
     Breaks recursion into a series of smaller recursions in sizes of `maxdepth`,
     greatly inhibiting stack overflow and reducing space complexity to `O(N / maxdepth)`.
+    The recursion depth only increases by `1` `recursion_manager` function call
+    for every `maxdepth` number of `adder` function calls.
     """
 
     # Do `test + 1` for first (or next) test case,
     # and call `adder` function with all needed args.
-    # This creates a recursion of `maxdepth` number of function calls
+    # This creates a recursion of `maxdepth` number of `adder` function calls
     # that treats only the next `maxdepth` number of test cases,
     # and stores each test result in `output`.
     # `output` object is provided by reference for a more efficient update to `output` across recursions.
     adder(cases, N, test + 1, output, depth + 1, maxdepth)
 
-    # Start another recursion of `maxdepth` number of function calls
+    # Start another recursion of `maxdepth` number of `adder` function calls
     # if there are still test cases left.
     if test + maxdepth < N:
-        recursion_manager(cases, N, test + maxdepth, output) # Do `test + maxdepth` for next test case
+        # Do `test + maxdepth` for current test case, and reset `depth`.
+
+        # Call `adder` function if number of untreated test cases no longer exceeds `maxdepth + 1`.
+        if N - (test + maxdepth) <= maxdepth + 1:
+            adder(cases, N, test + maxdepth + 1, output, 1, maxdepth + 1)
+        # Apply `recursion_manager` function if number of untreated test cases still exceeds `maxdepth + 1`.
+        else:
+            recursion_manager(cases, N, test + maxdepth, output, 0, maxdepth)
 
 def main():
     """
@@ -76,12 +86,25 @@ def main():
     test = 0 # Initialize number of test cases treated with `0`.
     output = [] # Create an empty list to store result of each test case.
 
-    # Start a recursion of `maxdepth` number of function calls if there are test cases.
-    if N: recursion_manager(cases, N, test, output)
+    if N: # If there are test cases
+        # To optimize space complexity, implement a recursion manager to manage `adder`'s call stack,
+        # ensuring it never exceeds a set maximum recursion depth (`maxdepth`)
+        maxdepth = 5
 
-    # Step 3: Outputs program result to standard output.
-    # Join all results in `output` with `\n`.
-    open(1, "w").write("\n".join(output) + "\n") # File descriptor `1` points to standard output.
+        if N <= maxdepth + 1: # Call `adder` function if `N` does not exceed `maxdepth + 1`.
+            adder(cases, N, test + 1, output, 1, maxdepth + 1)
+        else: # Apply `recursion_manager` function if `N` exceeds `maxdepth + 1`.
+            recursion_manager(cases, N, test, output, 0, maxdepth)
+
+        # Note:
+        # To ensure this alogrithm's recursion depth is not unnecessarily increased by 1, for `N <= maxdepth + 1`,
+        # (with an underlying `recursion_manager` function call),
+        # `adder` is called directly for such cases where `N <= maxdepth + 1`.
+        # `maxdepth + 1`, because optimality does not actually start until `maxdepth + 2`
+
+        # Step 3: Outputs program result to standard output.
+        # Join all results in `output` with `\n`.
+        open(1, "w").write("\n".join(output) + "\n") # File descriptor `1` points to standard output.
 
 if __name__ == "__main__":
     main()
