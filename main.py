@@ -6,7 +6,8 @@ Where:
 N = Number of test cases
 Xt = Total number of integers in all test cases
 
-Note: To avoid hitting the maximum recursion limit (`sys.getrecursionlimit()`) for test cases around 1000 and above,
+Note: To reduce memory usage due to increasing recursion stack usage
+(and to avoid hitting the maximum recursion limit (`sys.getrecursionlimit()`) for larger test cases),
 I devised a technique I call 'Recursion Breaking' for greatly reducing recursion stack usage. Works like magic!
 """
 
@@ -92,7 +93,7 @@ def main():
     test = 0 # Initialize number of test cases treated with `0`.
     output = [] # Create an empty list to store result of each test case.
 
-    if N: # If there are test cases
+    if N:
         # To optimize space complexity, implement a recursion manager to manage `adder`'s call stack,
         # ensuring it never exceeds a set maximum number of stack frames (`maxframes`).
 
