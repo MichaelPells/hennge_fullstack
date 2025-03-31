@@ -49,10 +49,10 @@ body = {
   "solution_language": "python"
 }
 
-# response = requests.post(URL,
-#               json = body,
-#               auth = HTTPBasicAuth(userid, password)
-#               )
+response = requests.post(URL,
+              json = body,
+              auth = HTTPBasicAuth(userid, password)
+              )
 
-# print(response.status_code)
-# print(response.json())
+print(response.status_code)
+print(response.json())
