@@ -1,13 +1,13 @@
 """
 Time Complexity: O(N + Xt)
-Space Complexity: O(N + Xt) due to input storage and recursion depth
+Space Complexity: O(N + Xt) due to input storage and recursion stack usage
 
 Where:
 N = Number of test cases
 Xt = Total number of integers in all test cases
 
 Note: To avoid hitting the maximum recursion limit (`sys.getrecursionlimit()`) for test cases around 1000 and above,
-I devised a technique I call Recursion Breaking. Works like magic!
+I devised a technique I call 'Recursion Breaking' for greatly reducing recursion stack usage. Works like magic!
 """
 
 
